@@ -4,7 +4,7 @@ Sistema completo de pedidos online com cardápio digital e integração com What
 
 ## 📋 Sobre o Projeto
 
-Este é o projeto **frontend** do sistema de pedidos online. O backend foi movido para um projeto separado chamado **api-start-pira-net**.
+Este é o projeto **frontend** do sistema de pedidos online.
 
 ## 🏗️ Estrutura dos Projetos
 
@@ -39,55 +39,6 @@ Este é o projeto **frontend** do sistema de pedidos online. O backend foi movid
 - PostgreSQL (Neon)
 - CORS
 
-## ⚙️ Configuração
-
-### 1. Frontend (este projeto)
-
-```bash
-cd frontend
-npm install
-```
-
-Crie o arquivo `.env`:
-```env
-VITE_API_URL=http://localhost:3001/api
-```
-
-Execute:
-```bash
-npm run dev
-```
-
-### 2. Backend (api-start-pira-net)
-
-Navegue para o projeto backend:
-```bash
-cd ..\api-start-pira-net
-npm install
-```
-
-Configure o `.env` com sua connection string do banco de dados:
-```env
-DATABASE_URL="sua_connection_string_postgresql"
-PORT=3001
-WHATSAPP_NUMBER=5511999999999
-```
-
-Execute as migrations do Prisma:
-```bash
-npx prisma migrate dev
-npx prisma generate
-```
-
-Inicie o servidor:
-```bash
-npm run dev
-```
-
-## 🌐 URLs
-
-- **Frontend**: http://localhost:5173
-- **Backend API**: http://localhost:3001/api
 
 ## 📱 Funcionalidades
 
@@ -110,11 +61,11 @@ npm run dev
 
 O sistema utiliza PostgreSQL (Neon) com as seguintes tabelas:
 
-- `categories` - Categorias e subcategorias
-- `products` - Produtos do cardápio
-- `orders` - Pedidos realizados
-- `order_items` - Itens dos pedidos
-- `suggestions` - Sugestões de produtos
+- `categorias` - Categorias e subcategorias
+- `produtos` - Produtos do cardápio
+- `pedidos` - Pedidos realizados
+- `pedidos_itens` - Itens dos pedidos
+- `sugestoes` - Sugestões de produtos
 
 ## 📝 Scripts Disponíveis
 
@@ -131,11 +82,7 @@ npm start         # Produção
 npm run dev       # Desenvolvimento com watch
 ```
 
-## 🔗 Documentação Adicional
-
-- [Frontend README](./frontend/LEIAME.md)
-- [Backend README](../api-start-pira-net/README.md)
-
 ## 📞 Contato
 
-Sistema desenvolvido para Start Pira Net - Pedidos Online
+Sistema desenvolvido para Start Pira Net - Pedidos Online (Todos os diretos reservados)
+

@@ -17,6 +17,7 @@ function App() {
   const [modalConfirmacao, setModalConfirmacao] = useState(false);
   const [pedidoEnviado, setPedidoEnviado] = useState(null);
   const [enviandoPedido, setEnviandoPedido] = useState(false);
+  const [toast, setToast] = useState({ show: false, message: '', produto: null });
   
   // Dados do cliente
   const [cliente, setCliente] = useState({
@@ -132,6 +133,18 @@ function App() {
     } else {
       setCarrinho([...carrinho, { ...produto, quantidade: 1 }]);
     }
+
+    // Mostrar notificação
+    setToast({ 
+      show: true, 
+      message: 'Produto adicionado ao carrinho!', 
+      produto: produto.nome 
+    });
+    
+    // Esconder após 3 segundos
+    setTimeout(() => {
+      setToast({ show: false, message: '', produto: null });
+    }, 3000);
   };
 
   // Remover do carrinho
@@ -596,6 +609,19 @@ function App() {
             >
               Entendi
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* Toast Notification */}
+      {toast.show && (
+        <div className="toast-notification">
+          <div className="toast-content">
+            <FaShoppingCart className="toast-icon" />
+            <div className="toast-text">
+              <strong>{toast.message}</strong>
+              {toast.produto && <span>{toast.produto}</span>}
+            </div>
           </div>
         </div>
       )}

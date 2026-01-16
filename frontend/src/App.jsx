@@ -28,17 +28,21 @@ function App() {
 
   // Carregar cardápio e sugestões
   useEffect(() => {
+    console.log('Iniciando carregamento de dados...');
     Promise.all([
       getCategories(), // Usar getCategories ao invés de getCardapio
       getSugestoes()
     ])
       .then(([categoriesData, sugestoesData]) => {
+        console.log('Categorias recebidas:', categoriesData);
+        console.log('Sugestões recebidas:', sugestoesData);
         setCardapio(categoriesData);
         setSugestoes(sugestoesData);
         setLoading(false);
       })
       .catch(error => {
         console.error('Erro ao carregar dados:', error);
+        console.error('Detalhes do erro:', error.response?.data || error.message);
         setLoading(false);
       });
   }, []);
@@ -87,7 +91,7 @@ function App() {
     setTimeout(() => {
       const section = document.querySelector(`.category-section[data-category="${categoryName}"]`);
       if (section) {
-        const headerOffset = 180; // Altura do header + barra de categorias
+        const headerOffset = 140; // Altura do header + barra de categorias (ajustado)
         const elementPosition = section.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 

@@ -1,0 +1,14 @@
+{
+  "name": "pedidos-online-frontend",
+  "version": "1.0.0",
+  "description": "Frontend para sistema de pedidos online",
+  "private": true,
+  "scripts": {
+    "dev": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "preview": "cd frontend && npm run preview"
+  },
+  "keywords": ["pedidos", "whatsapp", "cardapio", "frontend"],
+  "author": "",
+  "license": "ISC"
+}

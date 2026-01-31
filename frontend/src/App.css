@@ -101,20 +101,32 @@ body {
 @media (max-width: 768px) {
   .logo-image {
     height: 40px;
+    left: -0.5rem;
   }
   
   .logo {
     font-size: 1rem;
+    padding: 0 3rem;
   }
 }
 
 @media (max-width: 480px) {
+  .header {
+    padding: 0.75rem 0.5rem;
+  }
+  
   .logo-image {
-    height: 35px;
+    height: 30px;
+    left: -0.25rem;
   }
   
   .logo {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
+    padding: 0 2.5rem;
+  }
+  
+  .header-actions {
+    gap: 0.25rem;
   }
 }
 

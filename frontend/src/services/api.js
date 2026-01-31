@@ -125,6 +125,30 @@ export const deleteSugestao = async (id) => {
 };
 
 // ============================================
+// SUGESTÕES DE MELHORIAS
+// ============================================
+
+export const getSugestoesMelhorias = async () => {
+  const response = await api.get('/sugestoes-melhorias');
+  return response.data;
+};
+
+export const createSugestaoMelhoria = async (sugestaoData) => {
+  const response = await api.post('/sugestoes-melhorias', sugestaoData);
+  return response.data;
+};
+
+export const votarSugestaoMelhoria = async (id, incremento) => {
+  const response = await api.put(`/sugestoes-melhorias/${id}/votar`, { incremento });
+  return response.data;
+};
+
+export const deleteSugestaoMelhoria = async (id) => {
+  const response = await api.delete(`/sugestoes-melhorias/${id}`);
+  return response.data;
+};
+
+// ============================================
 // HEALTH CHECK
 // ============================================
 

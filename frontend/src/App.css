@@ -75,6 +75,12 @@ body {
   align-items: center;
 }
 
+.header-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
 .logo {
   font-size: 1.25rem;
   font-weight: bold;
@@ -88,6 +94,7 @@ body {
   }
 }
 
+.sugestoes-button,
 .cart-button {
   position: relative;
   background: rgba(255, 255, 255, 0.2);
@@ -105,10 +112,15 @@ body {
   height: 50px;
 }
 
+.sugestoes-button:hover,
 .cart-button:hover {
   background: white;
   color: var(--primary-color);
   transform: scale(1.1);
+}
+
+.sugestoes-button svg {
+  font-size: 1.1rem;
 }
 
 .cart-badge {

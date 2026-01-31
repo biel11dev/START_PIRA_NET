@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { FaShoppingCart, FaWhatsapp, FaSearch, FaTimes, FaPlus, FaMinus, FaStar, FaFire, FaTag, FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { FaShoppingCart, FaWhatsapp, FaSearch, FaTimes, FaPlus, FaMinus, FaStar, FaFire, FaTag, FaChevronDown, FaChevronUp, FaLightbulb } from 'react-icons/fa';
 import { getCategories, getSugestoes, createOrder } from './services/api';
+import SugestoesMelhorias from './SugestoesMelhoriasAPI';
 import './App.css';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
   const [pedidoEnviado, setPedidoEnviado] = useState(null);
   const [enviandoPedido, setEnviandoPedido] = useState(false);
   const [toast, setToast] = useState({ show: false, message: '', produto: null });
+  const [paginaAtual, setPaginaAtual] = useState('cardapio'); // 'cardapio' ou 'sugestoes'
   
   // Dados do cliente
   const [cliente, setCliente] = useState({
@@ -268,21 +270,35 @@ function App() {
     );
   }
 
+  // Se está na página de sugestões
+  if (paginaAtual === 'sugestoes') {
+    return <SugestoesMelhorias onVoltar={() => setPaginaAtual('cardapio')} />;
+  }
+
   return (
     <div className="app-container">
       {/* Header */}
       <header className="header">
         <div className="header-content">
           <h1 className="logo">Menu Digital - Start Pira Net</h1>
-          <button 
-            className="cart-button"
-            onClick={() => setModalCarrinho(true)}
-          >
-            <FaShoppingCart />
-            {totalItensCarrinho > 0 && (
-              <span className="cart-badge">{totalItensCarrinho}</span>
-            )}
-          </button>
+          <div className="header-actions">
+            <button 
+              className="sugestoes-button"
+              onClick={() => setPaginaAtual('sugestoes')}
+              title="Sugerir Melhorias"
+            >
+              <FaLightbulb />
+            </button>
+            <button 
+              className="cart-button"
+              onClick={() => setModalCarrinho(true)}
+            >
+              <FaShoppingCart />
+              {totalItensCarrinho > 0 && (
+                <span className="cart-badge">{totalItensCarrinho}</span>
+              )}
+            </button>
+          </div>
         </div>
       </header>
 

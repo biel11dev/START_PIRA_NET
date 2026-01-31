@@ -21,7 +21,7 @@ function Login() {
     const result = await login(email, password);
     
     if (result.success) {
-      navigate('/admin/dashboard');
+      navigate('/admin');
     } else {
       setError(result.error || 'Email ou senha inválidos');
     }

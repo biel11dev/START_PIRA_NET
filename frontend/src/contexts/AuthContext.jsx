@@ -17,9 +17,11 @@ export function AuthProvider({ children }) {
     setLoading(false);
   }, []);
 
+  const API = import.meta.env.VITE_API_URL || 'https://api-start-pira.vercel.app/api';
+
   const login = async (email, password) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001/api'}/auth/login`, {
+      const response = await fetch(`${API}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

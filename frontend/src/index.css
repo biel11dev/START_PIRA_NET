@@ -52,6 +52,18 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+/* Exceção para botões toggle - não aplicar estilos globais */
+.alternador,
+.close-button,
+.toggle-button,
+.toggle-button-large {
+  all: unset;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

@@ -1,0 +1,129 @@
+import { useState } from 'react';
+import { Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
+import { FaHome, FaBox, FaList, FaShoppingBag, FaLightbulb, FaSignOutAlt, FaBars, FaTimes } from 'react-icons/fa';
+import Products from './Products';
+import Categories from './Categories';
+import Orders from './Orders';
+import Suggestions from './Suggestions';
+import './Dashboard.css';
+
+function Dashboard() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleLogout = () => {
+    logout();
+    navigate('/admin/login');
+  };
+
+  const menuItems = [
+    { path: '/admin', icon: <FaHome />, label: 'Dashboard' },
+    { path: '/admin/products', icon: <FaBox />, label: 'Produtos' },
+    { path: '/admin/categories', icon: <FaList />, label: 'Categorias' },
+    { path: '/admin/orders', icon: <FaShoppingBag />, label: 'Pedidos' },
+    { path: '/admin/suggestions', icon: <FaLightbulb />, label: 'Sugestões' },
+  ];
+
+  return (
+    <div className="dashboard-container">
+      {/* Sidebar */}
+      <aside className={`sidebar ${menuOpen ? 'open' : ''}`}>
+        <div className="sidebar-header">
+          <img src="/start.png" alt="Start Pira" className="sidebar-logo" />
+          <h2>Admin Painel</h2>
+          <button className="close-menu" onClick={() => setMenuOpen(false)}>
+            <FaTimes />
+          </button>
+        </div>
+
+        <nav className="sidebar-nav">
+          {menuItems.map((item) => (
+            <Link
+              key={item.path}
+              to={item.path}
+              className="nav-item"
+              onClick={() => setMenuOpen(false)}
+            >
+              {item.icon}
+              <span>{item.label}</span>
+            </Link>
+          ))}
+        </nav>
+
+        <div className="sidebar-footer">
+          <div className="user-info">
+            <strong>{user?.name || user?.email}</strong>
+            <span>Administrador</span>
+          </div>
+          <button className="btn-logout" onClick={handleLogout}>
+            <FaSignOutAlt /> Sair
+          </button>
+        </div>
+      </aside>
+
+      {/* Main Content */}
+      <div className="dashboard-main-content">
+        <header className="dashboard-header">
+          <button className="menu-toggle" onClick={() => setMenuOpen(true)}>
+            <FaBars />
+          </button>
+          <h1>Painel Administrativo</h1>
+          <button className="btn-view-menu" onClick={() => navigate('/')}>
+            Ver Menu Público
+          </button>
+        </header>
+
+        <div className="content-area">
+          <Routes>
+            <Route index element={<DashboardHome />} />
+            <Route path="products" element={<Products />} />
+            <Route path="categories" element={<Categories />} />
+            <Route path="orders" element={<Orders />} />
+            <Route path="suggestions" element={<Suggestions />} />
+          </Routes>
+        </div>
+      </div>
+
+      {/* Overlay for mobile */}
+      {menuOpen && (
+        <div className="sidebar-overlay" onClick={() => setMenuOpen(false)} />
+      )}
+    </div>
+  );
+}
+
+function DashboardHome() {
+  return (
+    <div className="dashboard-home">
+      <h2>Bem-vindo ao Painel Administrativo</h2>
+      <p>Selecione uma opção no menu lateral para começar.</p>
+      
+      <div className="dashboard-cards">
+        <div className="dash-card">
+          <FaBox size={40} />
+          <h3>Produtos</h3>
+          <p>Gerencie seu cardápio</p>
+        </div>
+        <div className="dash-card">
+          <FaList size={40} />
+          <h3>Categorias</h3>
+          <p>Organize suas categorias</p>
+        </div>
+        <div className="dash-card">
+          <FaShoppingBag size={40} />
+          <h3>Pedidos</h3>
+          <p>Acompanhe os pedidos</p>
+        </div>
+        <div className="dash-card">
+          <FaLightbulb size={40} />
+          <h3>Sugestões</h3>
+          <p>Feedback dos clientes</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Dashboard;

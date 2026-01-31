@@ -1,0 +1,265 @@
+.orders-page {
+  padding: 0;
+}
+
+.stats-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card h4 {
+  font-size: 0.875rem;
+  color: #7F8C8D;
+  margin: 0 0 0.5rem 0;
+  text-transform: uppercase;
+}
+
+.stat-card p {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2C3E50;
+  margin: 0;
+}
+
+.stat-card.pending p {
+  color: #F39C12;
+}
+
+.stat-card.confirmed p {
+  color: #3498DB;
+}
+
+.stat-card.preparing p {
+  color: #9B59B6;
+}
+
+.stat-card.delivered p {
+  color: #27AE60;
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.order-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.order-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.order-id {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #2C3E50;
+  margin: 0 0 0.25rem 0;
+}
+
+.order-date {
+  font-size: 0.875rem;
+  color: #7F8C8D;
+}
+
+.order-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-select {
+  padding: 0.5rem 1rem;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.status-select.pending {
+  background: #FFF3CD;
+  border-color: #F39C12;
+  color: #856404;
+}
+
+.status-select.confirmed {
+  background: #D1ECF1;
+  border-color: #3498DB;
+  color: #0C5460;
+}
+
+.status-select.preparing {
+  background: #E2D9F3;
+  border-color: #9B59B6;
+  color: #6F42C1;
+}
+
+.status-select.delivered {
+  background: #D4EDDA;
+  border-color: #27AE60;
+  color: #155724;
+}
+
+.status-select.cancelled {
+  background: #F8D7DA;
+  border-color: #E74C3C;
+  color: #721C24;
+}
+
+.order-body {
+  padding: 1.5rem;
+}
+
+.customer-info {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.customer-info h4 {
+  font-size: 1rem;
+  color: #2C3E50;
+  margin: 0 0 0.75rem 0;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: #7F8C8D;
+  font-size: 0.875rem;
+}
+
+.info-row svg {
+  color: #FF6B35;
+}
+
+.order-items {
+  margin-bottom: 1.5rem;
+}
+
+.order-items h4 {
+  font-size: 1rem;
+  color: #2C3E50;
+  margin: 0 0 1rem 0;
+}
+
+.items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.item-info {
+  flex: 1;
+}
+
+.item-name {
+  font-weight: 600;
+  color: #2C3E50;
+  margin-bottom: 0.25rem;
+}
+
+.item-quantity {
+  font-size: 0.875rem;
+  color: #7F8C8D;
+}
+
+.item-price {
+  font-weight: 600;
+  color: #27AE60;
+}
+
+.order-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 2px solid #e0e0e0;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #2C3E50;
+}
+
+.order-total span:last-child {
+  color: #27AE60;
+}
+
+.observations-section {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #FFF3CD;
+  border-left: 4px solid #F39C12;
+  border-radius: 4px;
+}
+
+.observations-section h4 {
+  font-size: 0.875rem;
+  color: #856404;
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+}
+
+.observations-section p {
+  margin: 0;
+  color: #856404;
+  font-size: 0.875rem;
+}
+
+@media (max-width: 768px) {
+  .stats-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stat-card p {
+    font-size: 1.5rem;
+  }
+
+  .order-header {
+    flex-direction: column;
+  }
+
+  .order-status {
+    width: 100%;
+  }
+
+  .status-select {
+    width: 100%;
+  }
+}

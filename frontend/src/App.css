@@ -112,31 +112,41 @@ body {
 
 @media (max-width: 480px) {
   .header {
-    padding: 0.75rem 0.5rem;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    padding: 0.5rem !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 100 !important;
+    height: auto;
   }
   
   .logo-image {
-    height: 30px;
-    left: -0.25rem;
+    height: 28px !important;
+    left: 0 !important;
   }
   
   .logo {
-    font-size: 0.65rem;
-    padding: 0 2.5rem;
-    line-height: 1.2;
+    font-size: 0.6rem !important;
+    padding: 0 2rem !important;
+    line-height: 1.1 !important;
   }
   
   .header-actions {
     gap: 0.25rem;
   }
   
+  .sugestoes-button,
+  .cart-button {
+    width: 40px !important;
+    height: 40px !important;
+    padding: 0.5rem !important;
+  }
+  
   .categories-filter {
-    position: sticky;
-    top: 55px;
-    z-index: 99;
+    position: sticky !important;
+    top: 50px !important;
+    z-index: 99 !important;
+    padding: 0.5rem !important;
+    gap: 0.5rem !important;
   }
 }
 

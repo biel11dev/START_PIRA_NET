@@ -17,7 +17,7 @@ export function AuthProvider({ children }) {
     setLoading(false);
   }, []);
 
-  const API = import.meta.env.VITE_API_URL || 'https://api-start-pira.vercel.app/api';
+  const API = import.meta.env.VITE_API_URL || 'https://api-start-pira-net.vercel.app/api';
 
   const login = async (email, password) => {
     try {

@@ -73,6 +73,23 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+}
+
+.logo-image {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+  position: absolute;
+  left: 0;
+}
+
+.logo {
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-align: center;
+  flex: 1;
+  margin: 0;
 }
 
 .header-actions {
@@ -81,16 +98,23 @@ body {
   align-items: center;
 }
 
-.logo {
-  font-size: 1.25rem;
-  font-weight: bold;
-  text-align: center;
-  flex: 1;
+@media (max-width: 768px) {
+  .logo-image {
+    height: 40px;
+  }
+  
+  .logo {
+    font-size: 1rem;
+  }
 }
 
 @media (max-width: 480px) {
+  .logo-image {
+    height: 35px;
+  }
+  
   .logo {
-    font-size: 1rem;
+    font-size: 0.85rem;
   }
 }
 

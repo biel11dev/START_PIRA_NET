@@ -280,6 +280,7 @@ function App() {
       {/* Header */}
       <header className="header">
         <div className="header-content">
+          <img src="/start.png" alt="Start Pira" className="logo-image" />
           <h1 className="logo">Menu Digital - Start Pira Net</h1>
           <div className="header-actions">
             <button 

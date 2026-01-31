@@ -112,7 +112,7 @@ body {
 
 @media (max-width: 480px) {
   .header {
-    padding: 0.5rem 0.5rem !important;
+    padding: 0.5rem !important;
     position: sticky !important;
     top: 0 !important;
     z-index: 100 !important;
@@ -120,14 +120,15 @@ body {
   }
   
   .header-content {
-    position: relative;
-    padding: 0 90px 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   .logo-image {
     height: 32px !important;
-    left: 0.5rem !important;
-    flex-shrink: 0;
+    left: 0 !important;
+    position: absolute !important;
   }
   
   .logo {
@@ -135,16 +136,16 @@ body {
     padding: 0 !important;
     line-height: 1.2 !important;
     white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
     text-align: center !important;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 45px;
   }
   
   .header-actions {
     gap: 0.25rem;
-    flex-shrink: 0;
-    position: absolute;
-    right: 0.5rem;
   }
   
   .sugestoes-button,

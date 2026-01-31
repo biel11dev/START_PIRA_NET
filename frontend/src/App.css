@@ -113,6 +113,9 @@ body {
 @media (max-width: 480px) {
   .header {
     padding: 0.75rem 0.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
   }
   
   .logo-image {
@@ -128,6 +131,12 @@ body {
   
   .header-actions {
     gap: 0.25rem;
+  }
+  
+  .categories-filter {
+    position: sticky;
+    top: 55px;
+    z-index: 99;
   }
 }
 
@@ -1068,11 +1077,6 @@ body {
 }
 
 @media (max-width: 480px) {
-  .categories-filter {
-    top: 60px;
-    gap: 0.5rem;
-  }
-
   .category-chip {
     padding: 0.4rem 1rem;
     font-size: 0.875rem;

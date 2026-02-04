@@ -209,62 +209,119 @@ function Products() {
           <p>Nenhum produto encontrado</p>
         </div>
       ) : (
-        <div className="products-table-container">
-          <table className="products-table">
-            <thead>
-              <tr>
-                <th>Imagem</th>
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Categoria</th>
-                <th>Preço</th>
-                <th>Status</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredProducts.map(product => (
-                <tr key={product.id}>
-                  <td className="product-image-cell">{product.image || '📦'}</td>
-                  <td className="product-name-cell">{product.name}</td>
-                  <td className="product-description-cell">{product.description || '-'}</td>
-                  <td>{product.category?.name || '-'}</td>
-                  <td className="product-price-cell">
-                    R$ {product.price.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                  </td>
-                  <td>
+        <>
+          {/* Desktop Table View */}
+          <div className="products-table-container desktop-view">
+            <table className="products-table">
+              <thead>
+                <tr>
+                  <th>Imagem</th>
+                  <th>Nome</th>
+                  <th>Descrição</th>
+                  <th>Categoria</th>
+                  <th>Preço</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredProducts.map(product => (
+                  <tr key={product.id}>
+                    <td className="product-image-cell">{product.image || '📦'}</td>
+                    <td className="product-name-cell">{product.name}</td>
+                    <td className="product-description-cell">{product.description || '-'}</td>
+                    <td>{product.category?.name || '-'}</td>
+                    <td className="product-price-cell">
+                      R$ {product.price.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                    </td>
+                    <td>
+                      <span className={`status-badge ${product.available ? 'available' : 'unavailable'}`}>
+                        {product.available ? 'Disponível' : 'Indisponível'}
+                      </span>
+                    </td>
+                    <td className="actions-cell">
+                      <button
+                        className="btn-icon toggle"
+                        onClick={() => toggleAvailability(product.id, product.available)}
+                        title={product.available ? 'Marcar como indisponível' : 'Marcar como disponível'}
+                      >
+                        {product.available ? <FaEye /> : <FaEyeSlash />}
+                      </button>
+                      <button
+                        className="btn-icon edit"
+                        onClick={() => handleEdit(product)}
+                        title="Editar"
+                      >
+                        <FaEdit />
+                      </button>
+                      <button
+                        className="btn-icon delete"
+                        onClick={() => handleDelete(product.id)}
+                        title="Excluir"
+                      >
+                        <FaTrash />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Mobile Cards View */}
+          <div className="products-cards-container mobile-view">
+            {filteredProducts.map(product => (
+              <div key={product.id} className="product-card">
+                <div className="product-card-header">
+                  <div className="product-card-image">{product.image || '📦'}</div>
+                  <div className="product-card-info">
+                    <h3>{product.name}</h3>
                     <span className={`status-badge ${product.available ? 'available' : 'unavailable'}`}>
                       {product.available ? 'Disponível' : 'Indisponível'}
                     </span>
-                  </td>
-                  <td className="actions-cell">
-                    <button
-                      className="btn-icon toggle"
-                      onClick={() => toggleAvailability(product.id, product.available)}
-                      title={product.available ? 'Marcar como indisponível' : 'Marcar como disponível'}
-                    >
-                      {product.available ? <FaEye /> : <FaEyeSlash />}
-                    </button>
-                    <button
-                      className="btn-icon edit"
-                      onClick={() => handleEdit(product)}
-                      title="Editar"
-                    >
-                      <FaEdit />
-                    </button>
-                    <button
-                      className="btn-icon delete"
-                      onClick={() => handleDelete(product.id)}
-                      title="Excluir"
-                    >
-                      <FaTrash />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                  </div>
+                </div>
+                
+                <div className="product-card-body">
+                  <div className="product-card-row">
+                    <span className="label">Descrição:</span>
+                    <span className="value">{product.description || '-'}</span>
+                  </div>
+                  <div className="product-card-row">
+                    <span className="label">Categoria:</span>
+                    <span className="value">{product.category?.name || '-'}</span>
+                  </div>
+                  <div className="product-card-row">
+                    <span className="label">Preço:</span>
+                    <span className="value price">R$ {product.price.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                  </div>
+                </div>
+
+                <div className="product-card-actions">
+                  <button
+                    className="btn-card-action toggle"
+                    onClick={() => toggleAvailability(product.id, product.available)}
+                  >
+                    {product.available ? <FaEyeSlash /> : <FaEye />}
+                    {product.available ? 'Ocultar' : 'Exibir'}
+                  </button>
+                  <button
+                    className="btn-card-action edit"
+                    onClick={() => handleEdit(product)}
+                  >
+                    <FaEdit /> Editar
+                  </button>
+                  <button
+                    className="btn-card-action delete"
+                    onClick={() => handleDelete(product.id)}
+                  >
+                    <FaTrash /> Excluir
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
       )}
 
       {showModal && (

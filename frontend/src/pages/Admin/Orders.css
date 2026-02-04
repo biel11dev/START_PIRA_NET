@@ -243,16 +243,40 @@
 }
 
 @media (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .page-header h2 {
+    font-size: 1.25rem;
+  }
+
   .stats-cards {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .stat-card {
+    padding: 1.25rem;
   }
 
   .stat-card p {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
+  }
+
+  .orders-list {
+    gap: 1rem;
+  }
+
+  .order-card {
+    padding: 1rem;
   }
 
   .order-header {
     flex-direction: column;
+    gap: 0.75rem;
   }
 
   .order-status {
@@ -261,5 +285,33 @@
 
   .status-select {
     width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+  }
+
+  .order-items {
+    padding: 0.75rem;
+  }
+
+  .order-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .order-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .btn-danger {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .modal-content {
+    padding: 1rem;
+    margin: 0.5rem;
   }
 }

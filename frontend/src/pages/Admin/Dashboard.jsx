@@ -95,32 +95,34 @@ function Dashboard() {
 }
 
 function DashboardHome() {
+  const navigate = useNavigate();
+
   return (
     <div className="dashboard-home">
       <h2>Bem-vindo ao Painel Administrativo</h2>
       <p>Selecione uma opção no menu lateral para começar.</p>
       
       <div className="dashboard-cards">
-        <div className="dash-card">
+        <Link to="/admin/products" className="dash-card">
           <FaBox size={40} />
           <h3>Produtos</h3>
           <p>Gerencie seu cardápio</p>
-        </div>
-        <div className="dash-card">
+        </Link>
+        <Link to="/admin/categories" className="dash-card">
           <FaList size={40} />
           <h3>Categorias</h3>
           <p>Organize suas categorias</p>
-        </div>
-        <div className="dash-card">
+        </Link>
+        <Link to="/admin/orders" className="dash-card">
           <FaShoppingBag size={40} />
           <h3>Pedidos</h3>
           <p>Acompanhe os pedidos</p>
-        </div>
-        <div className="dash-card">
+        </Link>
+        <Link to="/admin/suggestions" className="dash-card">
           <FaLightbulb size={40} />
           <h3>Sugestões</h3>
           <p>Feedback dos clientes</p>
-        </div>
+        </Link>
       </div>
     </div>
   );

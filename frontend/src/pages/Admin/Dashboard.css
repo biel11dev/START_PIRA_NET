@@ -195,6 +195,13 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
   transition: all 0.3s ease;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  min-height: 180px;
 }
 
 .dash-card:hover {
@@ -244,9 +251,9 @@
     cursor: pointer;
   }
 
-  .main-content {
+  .dashboard-main-content {
     margin-left: 0;
-  }dashboard-
+  }
 
   .menu-toggle {
     display: flex;
@@ -274,6 +281,24 @@
 
   .content-area {
     padding: 1rem;
+  }
+
+  .dashboard-cards {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .dash-card {
+    padding: 1.5rem;
+    min-height: 150px;
+  }
+
+  .dash-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .dash-card p {
+    font-size: 0.875rem;
   }
 
   .sidebar-overlay {

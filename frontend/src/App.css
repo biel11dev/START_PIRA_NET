@@ -1,7 +1,7 @@
 /* Reset e variáveis */
 :root {
-  --primary-color: #FF6B35;
-  --primary-dark: #E85A2B;
+  --primary-color: #dc143c;
+  --primary-dark: #b71c1c;
   --secondary-color: #4ECDC4;
   --background: #F7F7F7;
   --card-background: #FFFFFF;
@@ -13,6 +13,16 @@
   --border-radius: 12px;
   --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Tema Escuro */
+[data-theme="dark"] {
+  --background: #1a1a1a;
+  --card-background: #2d2d2d;
+  --text-primary: #ffffff;
+  --text-secondary: #b0b0b0;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.6);
 }
 
 * {
@@ -58,7 +68,7 @@ body {
 
 /* Header */
 .header {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  background: linear-gradient(180deg, #dc143c 0%, #dc143c 50%, #FFD700 50%, #FFD700 100%);
   color: white;
   padding: 0.75rem 1rem;
   position: sticky;
@@ -140,6 +150,7 @@ body {
   }
   
   .sugestoes-button,
+  .theme-toggle-button,
   .cart-button {
     width: 40px !important;
     height: 40px !important;
@@ -160,6 +171,7 @@ body {
 }
 
 .sugestoes-button,
+.theme-toggle-button,
 .cart-button {
   position: relative;
   background: rgba(255, 255, 255, 0.2);
@@ -178,13 +190,15 @@ body {
 }
 
 .sugestoes-button:hover,
+.theme-toggle-button:hover,
 .cart-button:hover {
   background: white;
   color: var(--primary-color);
   transform: scale(1.1);
 }
 
-.sugestoes-button svg {
+.sugestoes-button svg,
+.theme-toggle-button svg {
   font-size: 1.1rem;
 }
 
@@ -366,7 +380,7 @@ body {
 
 .suggestion-card {
   position: relative;
-  background: linear-gradient(135deg, #FFF5E1 0%, #FFE4B5 100%);
+  background: var(--card-background);
   border-radius: var(--border-radius);
   padding: 1.5rem;
   box-shadow: var(--shadow);
@@ -399,7 +413,7 @@ body {
 .category-section {
   margin-bottom: 2.5rem;
   scroll-margin-top: 180px; /* Espaço para header + categorias fixas */
-  background: white;
+  background: var(--card-background);
   border-radius: var(--border-radius);
   padding: 1.5rem;
   box-shadow: var(--shadow);
@@ -414,12 +428,12 @@ body {
   border-radius: var(--border-radius);
   transition: all 0.3s ease;
   user-select: none;
-  background: linear-gradient(135deg, rgba(255, 107, 53, 0.05) 0%, rgba(232, 90, 43, 0.05) 100%);
+  background: var(--card-background);
   border: 2px solid var(--primary-color);
 }
 
 .category-header:hover {
-  background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(232, 90, 43, 0.1) 100%);
+  background: rgba(220, 20, 60, 0.1);
   transform: translateX(5px);
   box-shadow: var(--shadow);
 }

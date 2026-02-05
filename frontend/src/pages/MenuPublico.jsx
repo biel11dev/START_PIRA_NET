@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FaShoppingCart, FaWhatsapp, FaSearch, FaTimes, FaPlus, FaMinus, FaStar, FaFire, FaTag, FaChevronDown, FaChevronUp, FaLightbulb } from 'react-icons/fa';
+import { FaShoppingCart, FaWhatsapp, FaSearch, FaTimes, FaPlus, FaMinus, FaStar, FaFire, FaTag, FaChevronDown, FaChevronUp, FaLightbulb, FaMoon, FaSun } from 'react-icons/fa';
 import { getCategories, getSugestoes, createOrder, getSettings } from '../services/api';
 import SugestoesMelhorias from '../SugestoesMelhoriasAPI';
 import '../App.css';
@@ -21,6 +21,9 @@ function MenuPublico() {
   const [toast, setToast] = useState({ show: false, message: '', produto: null });
   const [paginaAtual, setPaginaAtual] = useState('cardapio'); // 'cardapio' ou 'sugestoes'
   const [bannerImage, setBannerImage] = useState('');
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('theme') || 'light';
+  });
   
   // Dados do cliente
   const [cliente, setCliente] = useState({
@@ -29,6 +32,17 @@ function MenuPublico() {
     endereco: ''
   });
   const [observacoes, setObservacoes] = useState('');
+
+  // Aplicar tema ao carregar e quando mudar
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  // Alternar tema
+  const toggleTheme = () => {
+    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
+  };
 
   // Carregar cardápio e sugestões
   useEffect(() => {
@@ -288,6 +302,13 @@ function MenuPublico() {
           <img src="/start.png" alt="Start Pira" className="logo-image" />
           <h1 className="logo">Menu Digital - Start Pira Net</h1>
           <div className="header-actions">
+            <button 
+              className="theme-toggle-button"
+              onClick={toggleTheme}
+              title={theme === 'light' ? 'Modo Escuro' : 'Modo Claro'}
+            >
+              {theme === 'light' ? <FaMoon /> : <FaSun />}
+            </button>
             <button 
               className="sugestoes-button"
               onClick={() => setPaginaAtual('sugestoes')}

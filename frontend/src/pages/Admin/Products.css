@@ -20,7 +20,7 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #FF6B35 0%, #E85A2B 100%);
+  background: linear-gradient(135deg, #dc143c 0%, #b71c1c 100%);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -347,7 +347,7 @@
   height: 120px;
   object-fit: cover;
   border-radius: 12px;
-  border: 3px solid #FF6B35;
+  border: 3px solid #dc143c;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 

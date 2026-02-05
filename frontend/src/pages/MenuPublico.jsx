@@ -400,7 +400,13 @@ function MenuPublico() {
                     <div className="products-grid">
                       {categoria.products.map(produto => (
                         <div key={produto.id} className="product-card">
-                          <div className="product-emoji">{produto.image}</div>
+                          <div className="product-emoji">
+                            {produto.image && (produto.image.startsWith('http') || produto.image.startsWith('data:image')) ? (
+                              <img src={produto.image} alt={produto.name} className="product-image" />
+                            ) : (
+                              <span>{produto.image || '📦'}</span>
+                            )}
+                          </div>
                           <h3>{produto.name}</h3>
                           <p className="product-description">{produto.description}</p>
                           <div className="product-footer">
@@ -450,7 +456,13 @@ function MenuPublico() {
                   <div className="products-grid subcategory-products">
                     {subcategoria.products.map(produto => (
                       <div key={produto.id} className="product-card">
-                        <div className="product-emoji">{produto.image}</div>
+                          <div className="product-emoji">
+                            {produto.image && (produto.image.startsWith('http') || produto.image.startsWith('data:image')) ? (
+                              <img src={produto.image} alt={produto.name} className="product-image" />
+                            ) : (
+                              <span>{produto.image || '📦'}</span>
+                            )}
+                          </div>
                         <h3>{produto.name}</h3>
                         <p className="product-description">{produto.description}</p>
                         <div className="product-footer">
@@ -517,7 +529,13 @@ function MenuPublico() {
                     {carrinho.map(item => (
                       <div key={item.id} className="cart-item">
                         <div className="cart-item-info">
-                          <span className="cart-item-emoji">{item.imagem}</span>
+                          <span className="cart-item-emoji">
+                            {item.imagem && (item.imagem.startsWith('http') || item.imagem.startsWith('data:image')) ? (
+                              <img src={item.imagem} alt={item.nome} className="cart-item-image" />
+                            ) : (
+                              <span>{item.imagem || '📦'}</span>
+                            )}
+                          </span>
                           <div>
                             <h4>{item.nome}</h4>
                             <p className="cart-item-price">R$ {item.preco.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>

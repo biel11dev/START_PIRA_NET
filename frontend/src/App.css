@@ -537,6 +537,19 @@ body {
   font-size: 4rem;
   text-align: center;
   margin-bottom: 0.75rem;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid var(--primary-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .product-card h3 {
@@ -704,6 +717,19 @@ body {
 
 .cart-item-emoji {
   font-size: 2rem;
+  min-width: 50px;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-item-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #f0f0f0;
 }
 
 .cart-item-info h4 {

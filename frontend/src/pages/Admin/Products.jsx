@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { FaPlus, FaEdit, FaTrash, FaEye, FaEyeSlash, FaBox } from 'react-icons/fa';
+import { useState, useEffect, useRef } from 'react';
+import { FaPlus, FaEdit, FaTrash, FaEye, FaEyeSlash, FaBox, FaUpload, FaTimes } from 'react-icons/fa';
 import { getProducts, getCategories, createProduct, updateProduct, deleteProduct, updateProductAvailability } from '../../services/api';
 import './Products.css';
 
@@ -9,6 +9,7 @@ function Products() {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
+  const fileInputRef = useRef(null);
   const [filters, setFilters] = useState({
     search: '',
     category: '',
@@ -122,6 +123,37 @@ function Products() {
     }
   };
 
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Validar tipo de arquivo
+    if (!file.type.startsWith('image/')) {
+      alert('Por favor, selecione apenas arquivos de imagem');
+      return;
+    }
+
+    // Validar tamanho (máximo 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      alert('A imagem deve ter no máximo 5MB');
+      return;
+    }
+
+    // Converter para base64
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setFormData({ ...formData, image: reader.result });
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleRemoveImage = () => {
+    setFormData({ ...formData, image: '' });
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
   const closeModal = () => {
     setShowModal(false);
     setEditingProduct(null);
@@ -227,7 +259,13 @@ function Products() {
               <tbody>
                 {filteredProducts.map(product => (
                   <tr key={product.id}>
-                    <td className="product-image-cell">{product.image || '📦'}</td>
+                    <td className="product-image-cell">
+                      {product.image && (product.image.startsWith('http') || product.image.startsWith('data:image')) ? (
+                        <img src={product.image} alt={product.name} className="product-table-image" />
+                      ) : (
+                        <span className="product-emoji">{product.image || '📦'}</span>
+                      )}
+                    </td>
                     <td className="product-name-cell">{product.name}</td>
                     <td className="product-description-cell">{product.description || '-'}</td>
                     <td>{product.category?.name || '-'}</td>
@@ -273,7 +311,13 @@ function Products() {
             {filteredProducts.map(product => (
               <div key={product.id} className="product-card">
                 <div className="product-card-header">
-                  <div className="product-card-image">{product.image || '📦'}</div>
+                  <div className="product-card-image">
+                    {product.image && (product.image.startsWith('http') || product.image.startsWith('data:image')) ? (
+                      <img src={product.image} alt={product.name} className="product-card-img" />
+                    ) : (
+                      <span className="product-emoji">{product.image || '📦'}</span>
+                    )}
+                  </div>
                   <div className="product-card-info">
                     <h3>{product.name}</h3>
                     <span className={`status-badge ${product.available ? 'available' : 'unavailable'}`}>
@@ -374,17 +418,54 @@ function Products() {
                 </div>
               </div>
 
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Emoji/Imagem</label>
+              <div className="form-group">
+                <label>Imagem do Produto</label>
+                <div className="image-upload-container">
                   <input
                     type="text"
-                    placeholder="🍕"
+                    placeholder="URL da imagem ou emoji (ex: 🍕)"
                     value={formData.image}
                     onChange={(e) => setFormData({ ...formData, image: e.target.value })}
                   />
+                  <div className="upload-button-group">
+                    <button
+                      type="button"
+                      className="btn-upload"
+                      onClick={() => fileInputRef.current?.click()}
+                    >
+                      <FaUpload /> Escolher Arquivo
+                    </button>
+                    {formData.image && (
+                      <button
+                        type="button"
+                        className="btn-remove-image"
+                        onClick={handleRemoveImage}
+                      >
+                        <FaTimes /> Remover
+                      </button>
+                    )}
+                  </div>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    style={{ display: 'none' }}
+                  />
                 </div>
+                {formData.image && (
+                  <div className="image-preview">
+                    <label>Preview:</label>
+                    {formData.image.startsWith('data:image') || formData.image.startsWith('http') ? (
+                      <img src={formData.image} alt="Preview" className="preview-img" />
+                    ) : (
+                      <span className="preview-emoji">{formData.image}</span>
+                    )}
+                  </div>
+                )}
+              </div>
 
+              <div className="form-row">
                 <div className="form-group">
                   <label>Categoria</label>
                   <select

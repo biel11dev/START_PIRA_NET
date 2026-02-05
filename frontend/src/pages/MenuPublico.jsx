@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { FaShoppingCart, FaWhatsapp, FaSearch, FaTimes, FaPlus, FaMinus, FaStar, FaFire, FaTag, FaChevronDown, FaChevronUp, FaLightbulb } from 'react-icons/fa';
-import { getCategories, getSugestoes, createOrder } from '../services/api';
+import { getCategories, getSugestoes, createOrder, getSettings } from '../services/api';
 import SugestoesMelhorias from '../SugestoesMelhoriasAPI';
 import '../App.css';
 
@@ -20,6 +20,7 @@ function MenuPublico() {
   const [enviandoPedido, setEnviandoPedido] = useState(false);
   const [toast, setToast] = useState({ show: false, message: '', produto: null });
   const [paginaAtual, setPaginaAtual] = useState('cardapio'); // 'cardapio' ou 'sugestoes'
+  const [bannerImage, setBannerImage] = useState('');
   
   // Dados do cliente
   const [cliente, setCliente] = useState({
@@ -32,15 +33,19 @@ function MenuPublico() {
   // Carregar cardápio e sugestões
   useEffect(() => {
     console.log('Iniciando carregamento de dados...');
+    
     Promise.all([
-      getCategories(), // Usar getCategories ao invés de getCardapio
-      getSugestoes()
+      getCategories(),
+      getSugestoes(),
+      getSettings()
     ])
-      .then(([categoriesData, sugestoesData]) => {
+      .then(([categoriesData, sugestoesData, settingsData]) => {
         console.log('Categorias recebidas:', categoriesData);
         console.log('Sugestões recebidas:', sugestoesData);
+        console.log('Configurações recebidas:', settingsData);
         setCardapio(categoriesData);
         setSugestoes(sugestoesData);
+        setBannerImage(settingsData.bannerImage || '');
         setLoading(false);
       })
       .catch(error => {
@@ -302,6 +307,13 @@ function MenuPublico() {
           </div>
         </div>
       </header>
+
+      {/* Banner/Capa */}
+      {bannerImage && (
+        <div className="hero-banner">
+          <img src={bannerImage} alt="Banner Start Pira" className="banner-image" />
+        </div>
+      )}
 
       {/* Barra de busca */}
       <div className="search-container">

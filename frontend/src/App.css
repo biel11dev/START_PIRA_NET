@@ -153,6 +153,10 @@ body {
     padding: 0.5rem !important;
     gap: 0.5rem !important;
   }
+
+  .hero-banner {
+    max-height: 250px;
+  }
 }
 
 .sugestoes-button,
@@ -199,6 +203,22 @@ body {
   font-size: 0.75rem;
   font-weight: bold;
   border: 2px solid white;
+}
+
+/* Hero Banner */
+.hero-banner {
+  width: 100%;
+  max-height: 400px;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(135deg, #FF6B35 0%, #E85A2B 100%);
+}
+
+.banner-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 /* Search */

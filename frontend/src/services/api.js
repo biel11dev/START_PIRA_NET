@@ -149,6 +149,35 @@ export const deleteSugestaoMelhoria = async (id) => {
 };
 
 // ============================================
+// CONFIGURAÇÕES
+// ============================================
+
+export const getSettings = async () => {
+  const response = await api.get('/settings');
+  return response.data;
+};
+
+export const getSettingByKey = async (key) => {
+  const response = await api.get(`/settings/${key}`);
+  return response.data;
+};
+
+export const saveSettings = async (settingsData) => {
+  const response = await api.post('/settings', settingsData);
+  return response.data;
+};
+
+export const updateSetting = async (key, value, description = null) => {
+  const response = await api.put(`/settings/${key}`, { value, description });
+  return response.data;
+};
+
+export const deleteSetting = async (key) => {
+  const response = await api.delete(`/settings/${key}`);
+  return response.data;
+};
+
+// ============================================
 // HEALTH CHECK
 // ============================================
 

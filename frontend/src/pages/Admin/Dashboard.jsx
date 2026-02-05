@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { FaHome, FaBox, FaList, FaShoppingBag, FaLightbulb, FaSignOutAlt, FaBars, FaTimes } from 'react-icons/fa';
+import { FaHome, FaBox, FaList, FaShoppingBag, FaLightbulb, FaSignOutAlt, FaBars, FaTimes, FaCog } from 'react-icons/fa';
 import Products from './Products';
 import Categories from './Categories';
 import Orders from './Orders';
 import Suggestions from './Suggestions';
+import Settings from './Settings';
 import './Dashboard.css';
 
 function Dashboard() {
@@ -24,6 +25,7 @@ function Dashboard() {
     { path: '/admin/categories', icon: <FaList />, label: 'Categorias' },
     { path: '/admin/orders', icon: <FaShoppingBag />, label: 'Pedidos' },
     { path: '/admin/suggestions', icon: <FaLightbulb />, label: 'Sugestões' },
+    { path: '/admin/settings', icon: <FaCog />, label: 'Configurações' },
   ];
 
   return (
@@ -82,6 +84,7 @@ function Dashboard() {
             <Route path="categories" element={<Categories />} />
             <Route path="orders" element={<Orders />} />
             <Route path="suggestions" element={<Suggestions />} />
+            <Route path="settings" element={<Settings />} />
           </Routes>
         </div>
       </div>
@@ -122,6 +125,11 @@ function DashboardHome() {
           <FaLightbulb size={40} />
           <h3>Sugestões</h3>
           <p>Feedback dos clientes</p>
+        </Link>
+        <Link to="/admin/settings" className="dash-card">
+          <FaCog size={40} />
+          <h3>Configurações</h3>
+          <p>Banner e informações</p>
         </Link>
       </div>
     </div>

@@ -9,8 +9,8 @@ function Orders() {
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
     pending: 0,
-    confirmed: 0,
-    preparing: 0,
+    ready: 0,
+    outForDelivery: 0,
     delivered: 0,
     total: 0
   });
@@ -28,8 +28,8 @@ function Orders() {
       // Calculate stats
       const statsData = {
         pending: data.filter(o => o.status === 'pending').length,
-        confirmed: data.filter(o => o.status === 'confirmed').length,
-        preparing: data.filter(o => o.status === 'preparing').length,
+        ready: data.filter(o => o.status === 'ready').length,
+        outForDelivery: data.filter(o => o.status === 'out_for_delivery').length,
         delivered: data.filter(o => o.status === 'delivered').length,
         total: data.length
       };
@@ -44,8 +44,16 @@ function Orders() {
 
   const handleStatusChange = async (orderId, newStatus) => {
     try {
-      await updateOrderStatus(orderId, newStatus);
+      const updated = await updateOrderStatus(orderId, newStatus);
       await loadOrders();
+
+      // Follow-up por WhatsApp ao cliente conforme a nova etapa
+      const followUp = updated?.whatsapp;
+      if (followUp?.link) {
+        window.open(followUp.link, '_blank');
+      } else if (followUp && followUp.hasPhone === false) {
+        alert('Status atualizado, mas o cliente não informou telefone — não foi possível enviar a mensagem.');
+      }
     } catch (error) {
       console.error('Erro ao atualizar status:', error);
       alert('Erro ao atualizar status do pedido');
@@ -66,10 +74,13 @@ function Orders() {
   const getStatusLabel = (status) => {
     const labels = {
       pending: 'Pendente',
-      confirmed: 'Confirmado',
-      preparing: 'Preparando',
+      ready: 'Pronto',
+      out_for_delivery: 'Saiu para entrega',
       delivered: 'Entregue',
-      cancelled: 'Cancelado'
+      cancelled: 'Cancelado',
+      // compatibilidade com pedidos antigos
+      confirmed: 'Confirmado',
+      preparing: 'Preparando'
     };
     return labels[status] || status;
   };
@@ -94,13 +105,13 @@ function Orders() {
           <h4>Pendentes</h4>
           <p>{stats.pending}</p>
         </div>
-        <div className="stat-card confirmed">
-          <h4>Confirmados</h4>
-          <p>{stats.confirmed}</p>
+        <div className="stat-card ready">
+          <h4>Prontos</h4>
+          <p>{stats.ready}</p>
         </div>
-        <div className="stat-card preparing">
-          <h4>Preparando</h4>
-          <p>{stats.preparing}</p>
+        <div className="stat-card out_for_delivery">
+          <h4>Saiu para entrega</h4>
+          <p>{stats.outForDelivery}</p>
         </div>
         <div className="stat-card delivered">
           <h4>Entregues</h4>
@@ -129,8 +140,8 @@ function Orders() {
                     onChange={(e) => handleStatusChange(order.id, e.target.value)}
                   >
                     <option value="pending">Pendente</option>
-                    <option value="confirmed">Confirmado</option>
-                    <option value="preparing">Preparando</option>
+                    <option value="ready">Pronto</option>
+                    <option value="out_for_delivery">Saiu para entrega</option>
                     <option value="delivered">Entregue</option>
                     <option value="cancelled">Cancelado</option>
                   </select>

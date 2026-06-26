@@ -1247,3 +1247,311 @@ body {
   }
 }
 
+/* ============================================
+   MODAL DE COMPOSIÇÃO (produtos por componentes)
+   ============================================ */
+.composicao-modal {
+  max-width: 520px;
+}
+
+.cart-item-composicao {
+  font-size: 0.78rem;
+  color: var(--text-secondary, #888);
+  margin: 2px 0 0;
+  line-height: 1.3;
+}
+
+.composicao-grupo {
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border-color, #eee);
+  padding-bottom: 1rem;
+}
+
+.composicao-grupo:last-of-type {
+  border-bottom: none;
+}
+
+.composicao-grupo-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.composicao-grupo-header h3 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.composicao-obrigatorio {
+  color: #e53935;
+  font-weight: 700;
+}
+
+.composicao-limite {
+  font-size: 0.75rem;
+  background: var(--accent-color, #ff6b35);
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.composicao-descricao {
+  font-size: 0.82rem;
+  color: var(--text-secondary, #888);
+  margin: 0 0 0.5rem;
+}
+
+.composicao-opcoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.composicao-opcao {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: 1.5px solid var(--border-color, #ddd);
+  border-radius: 10px;
+  background: var(--card-bg, #fff);
+  color: var(--text-primary, #222);
+  cursor: pointer;
+  font-size: 0.88rem;
+  transition: all 0.15s ease;
+}
+
+.composicao-opcao:hover {
+  border-color: var(--accent-color, #ff6b35);
+}
+
+.composicao-opcao.ativa {
+  border-color: var(--accent-color, #ff6b35);
+  background: var(--accent-color, #ff6b35);
+  color: #fff;
+}
+
+.composicao-extra {
+  font-size: 0.75rem;
+  opacity: 0.9;
+  font-weight: 600;
+}
+
+/* ============================================
+   VARIAÇÕES DE UNIDADE (mesmo produto, unidades diferentes)
+   ============================================ */
+.variacao-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.5rem 0;
+}
+
+.variacao-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 12px;
+  border: 1.5px solid var(--border-color, #ddd);
+  border-radius: 8px;
+  background: var(--card-bg, #fff);
+  color: var(--text-primary, #222);
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.15s ease;
+  min-width: 64px;
+}
+
+.variacao-option:hover {
+  border-color: var(--accent-color, #dc143c);
+}
+
+.variacao-option.ativa {
+  border-color: var(--accent-color, #dc143c);
+  background: var(--accent-color, #dc143c);
+  color: #fff;
+}
+
+.variacao-option.esgotada {
+  opacity: 0.45;
+}
+
+.variacao-unit {
+  font-weight: 700;
+}
+
+.variacao-price {
+  font-size: 0.72rem;
+  opacity: 0.9;
+}
+
+.product-unit-label {
+  font-size: 0.78rem;
+  color: var(--text-secondary, #888);
+  margin: 0.25rem 0;
+}
+
+/* ===== Modal de Pagamento PIX ===== */
+.pix-modal {
+  max-width: 440px;
+  width: 100%;
+}
+
+.pix-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  text-align: center;
+}
+
+.pix-instrucao {
+  font-size: 0.9rem;
+  color: var(--text-secondary, #777);
+  margin: 0;
+}
+
+.pix-total {
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.pix-total strong {
+  color: var(--primary-color, #dc143c);
+}
+
+.pix-qr {
+  background: #fff;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #eee;
+}
+
+.pix-qr img {
+  width: 220px;
+  height: 220px;
+  display: block;
+}
+
+.pix-copiacola {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pix-copiacola textarea {
+  width: 100%;
+  min-height: 64px;
+  resize: none;
+  font-size: 0.72rem;
+  font-family: monospace;
+  padding: 0.6rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fafafa;
+  color: #333;
+  word-break: break-all;
+}
+
+.pix-copiar-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--primary-color, #dc143c);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.pix-copiar-btn:hover {
+  background: var(--primary-dark, #b71c1c);
+}
+
+.pix-aguardando {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary, #777);
+}
+
+.pix-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ddd;
+  border-top-color: var(--primary-color, #dc143c);
+  border-radius: 50%;
+  animation: pix-spin 0.8s linear infinite;
+}
+
+@keyframes pix-spin {
+  to { transform: rotate(360deg); }
+}
+
+.pix-ticket-link {
+  font-size: 0.82rem;
+  color: var(--primary-color, #dc143c);
+  text-decoration: underline;
+}
+
+.pix-pago,
+.pix-falha {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0;
+}
+
+.pix-valor-pago {
+  font-weight: 600;
+  color: var(--success, #27AE60);
+}
+
+.pix-falha-titulo {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+/* Botão Checkout Pro (Mercado Pago) */
+.checkout-pro-button {
+  width: 100%;
+  margin-top: 12px;
+  padding: 14px 18px;
+  border: none;
+  border-radius: 12px;
+  background: #009ee3;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.checkout-pro-button:hover:not(:disabled) {
+  background: #007eb5;
+}
+
+.checkout-pro-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+#walletBrick_container {
+  width: 100%;
+  margin: 8px 0;
+  min-height: 48px;
+}
+

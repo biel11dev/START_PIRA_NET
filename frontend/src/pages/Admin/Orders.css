@@ -34,11 +34,11 @@
   color: #F39C12;
 }
 
-.stat-card.confirmed p {
+.stat-card.ready p {
   color: #3498DB;
 }
 
-.stat-card.preparing p {
+.stat-card.out_for_delivery p {
   color: #9B59B6;
 }
 
@@ -108,6 +108,19 @@
   color: #856404;
 }
 
+.status-select.ready {
+  background: #D1ECF1;
+  border-color: #3498DB;
+  color: #0C5460;
+}
+
+.status-select.out_for_delivery {
+  background: #E2D9F3;
+  border-color: #9B59B6;
+  color: #6F42C1;
+}
+
+/* compatibilidade com status antigos */
 .status-select.confirmed {
   background: #D1ECF1;
   border-color: #3498DB;

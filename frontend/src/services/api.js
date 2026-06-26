@@ -82,6 +82,47 @@ export const getCardapio = async () => {
 };
 
 // ============================================
+// CARDÁPIO POR COMPONENTES (sistema interno / QA)
+// ============================================
+
+// Cardápio com produtos montados por componentes (composição) vindo do sistema interno
+export const getCardapioComponentes = async () => {
+  const response = await api.get('/cardapio-qa');
+  return response.data;
+};
+
+// Registra o pedido público como venda no sistema interno (baixa estoque)
+export const criarPedidoComponentes = async (pedidoData) => {
+  const response = await api.post('/pedido-qa', pedidoData);
+  return response.data;
+};
+
+// ============================================
+// PAGAMENTO PIX (Mercado Pago)
+// ============================================
+
+// Cria a cobrança PIX (NÃO dá baixa de estoque ainda). Retorna qrCode (copia e cola) etc.
+export const criarPagamentoPix = async (pedidoData) => {
+  const response = await api.post('/pagamento-pix', pedidoData);
+  return response.data;
+};
+
+// Consulta o status do pagamento PIX (polling). Retorna { paid, status, orderId }.
+export const consultarStatusPix = async (orderId) => {
+  const response = await api.get(`/pagamento-pix/${orderId}/status`);
+  return response.data;
+};
+// ============================================
+// CHECKOUT PRO (Mercado Pago)
+// ============================================
+
+// Cria uma preferência de pagamento (Checkout Pro). Retorna { orderId, preferenceId, initPoint, publicKey }.
+export const criarCheckoutPro = async (pedidoData) => {
+  const response = await api.post('/preferencia-mp', pedidoData);
+  return response.data;
+};
+
+// ============================================
 // PEDIDOS
 // ============================================
 

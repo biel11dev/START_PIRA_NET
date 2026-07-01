@@ -15,9 +15,9 @@ const PAGAMENTO_INFO = {
   error: { label: 'Erro no pagamento', cor: 'vermelho' },
 };
 
-// Rótulo do andamento do pedido
+// Rótulo do andamento do pedido (statusPedido sincronizado do sistema interno)
 const STATUS_INFO = {
-  pending: 'Em análise',
+  pending: 'Aguardando preparo',
   preparing: 'Em preparo',
   ready: 'Pronto para retirada',
   out_for_delivery: 'Saiu para entrega',
@@ -131,7 +131,9 @@ function MeusPedidos() {
                   )}
 
                   <div className="pedido-card-rodape">
-                    <span className="pedido-status">Situação: <strong>{statusLabel}</strong></span>
+                    {pedido.paymentStatus === 'approved' && (
+                      <span className="pedido-status">Situação: <strong>{statusLabel}</strong></span>
+                    )}
                     <span className="pedido-total">Total: <strong>R$ {formatarValor(pedido.total)}</strong></span>
                   </div>
                 </div>

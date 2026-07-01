@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { FaShoppingCart, FaWhatsapp, FaSearch, FaTimes, FaPlus, FaMinus, FaStar, FaFire, FaTag, FaChevronDown, FaChevronUp, FaLightbulb, FaMoon, FaSun, FaCopy, FaCheck, FaQrcode, FaUserCircle, FaSignOutAlt } from 'react-icons/fa';
+import { FaShoppingCart, FaWhatsapp, FaSearch, FaTimes, FaPlus, FaMinus, FaStar, FaFire, FaTag, FaChevronDown, FaChevronUp, FaLightbulb, FaMoon, FaSun, FaCopy, FaCheck, FaQrcode, FaUserCircle, FaSignOutAlt, FaReceipt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { getCardapioComponentes, criarPagamentoPix, consultarStatusPix, criarCheckoutPro, getSugestoes, getSettings, getPedidoPorId } from '../services/api';
 import { useCustomerAuth } from '../contexts/CustomerAuthContext';
@@ -753,7 +753,16 @@ function MenuPublico() {
                 <FaUserCircle />
               </button>
             )}
-            <button 
+            {isAuthenticated() && (
+              <button
+                className="theme-toggle-button"
+                onClick={() => navigate('/meus-pedidos')}
+                title="Meus Pedidos"
+              >
+                <FaReceipt />
+              </button>
+            )}
+            <button
               className="sugestoes-button"
               onClick={() => setPaginaAtual('sugestoes')}
               title="Sugerir Melhorias"

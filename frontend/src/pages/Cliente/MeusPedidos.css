@@ -1,0 +1,214 @@
+/* ===== Meus Pedidos (histórico do cliente) ===== */
+.pedidos-page {
+  min-height: 100vh;
+  background: #f5f5f7;
+}
+
+.pedidos-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #dc143c 0%, #8b0000 100%);
+}
+
+.pedidos-voltar,
+.pedidos-atualizar {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 9px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+
+.pedidos-voltar:hover,
+.pedidos-atualizar:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.pedidos-atualizar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.girando {
+  animation: pedidos-spin 0.9s linear infinite;
+}
+
+@keyframes pedidos-spin {
+  to { transform: rotate(360deg); }
+}
+
+.pedidos-container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 24px 16px 60px;
+}
+
+.pedidos-titulo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+  color: #1a1a1a;
+}
+
+.pedidos-titulo svg {
+  font-size: 2rem;
+  color: #dc143c;
+}
+
+.pedidos-titulo h1 {
+  font-size: 1.6rem;
+  margin: 0;
+}
+
+.pedidos-titulo p {
+  margin: 2px 0 0;
+  color: #666;
+  font-size: 0.92rem;
+}
+
+.pedidos-info {
+  text-align: center;
+  color: #777;
+  padding: 30px;
+}
+
+.pedidos-erro {
+  background: #fdecea;
+  color: #b3261e;
+  border: 1px solid #f5c2c0;
+  padding: 14px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.pedidos-vazio {
+  text-align: center;
+  padding: 50px 20px;
+  color: #666;
+}
+
+.pedidos-vazio svg {
+  font-size: 3.4rem;
+  color: #dcdcdc;
+  margin-bottom: 12px;
+}
+
+.pedidos-vazio h2 {
+  margin: 0 0 6px;
+  color: #333;
+}
+
+.pedidos-btn-primary {
+  margin-top: 16px;
+  background: linear-gradient(135deg, #dc143c 0%, #b30000 100%);
+  color: #fff;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pedidos-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pedido-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.pedido-card-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.pedido-numero {
+  display: block;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.pedido-data {
+  display: block;
+  font-size: 0.82rem;
+  color: #888;
+  margin-top: 2px;
+}
+
+.pedido-badge {
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.pedido-badge.verde { background: #e7f6ec; color: #1a7f37; }
+.pedido-badge.laranja { background: #fff4e5; color: #b26a00; }
+.pedido-badge.vermelho { background: #fdecea; color: #b3261e; }
+.pedido-badge.cinza { background: #eee; color: #666; }
+
+.pedido-itens {
+  border-top: 1px dashed #e5e5e5;
+  border-bottom: 1px dashed #e5e5e5;
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pedido-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.pedido-obs {
+  margin: 10px 0 0;
+  font-size: 0.85rem;
+  color: #777;
+  font-style: italic;
+}
+
+.pedido-card-rodape {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.pedido-status {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.pedido-total {
+  font-size: 1rem;
+  color: #1a1a1a;
+}
+
+@media (max-width: 480px) {
+  .pedidos-titulo h1 { font-size: 1.35rem; }
+  .pedidos-voltar,
+  .pedidos-atualizar { font-size: 0.82rem; padding: 8px 10px; }
+}

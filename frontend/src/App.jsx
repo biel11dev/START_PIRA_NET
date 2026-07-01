@@ -10,6 +10,7 @@ import ClienteLogin from './pages/Cliente/ClienteLogin';
 import ClienteCadastro from './pages/Cliente/ClienteCadastro';
 import ClienteEsqueciSenha from './pages/Cliente/ClienteEsqueciSenha';
 import ClienteRedefinirSenha from './pages/Cliente/ClienteRedefinirSenha';
+import MeusPedidos from './pages/Cliente/MeusPedidos';
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '';
 
@@ -28,6 +29,7 @@ function AppRoutes() {
             <Route path="/cadastro" element={<ClienteCadastro />} />
             <Route path="/esqueci-senha" element={<ClienteEsqueciSenha />} />
             <Route path="/redefinir-senha" element={<ClienteRedefinirSenha />} />
+            <Route path="/meus-pedidos" element={<MeusPedidos />} />
 
             {/* Login de administrador */}
             <Route path="/admin/login" element={<Login />} />

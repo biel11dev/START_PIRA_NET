@@ -9,6 +9,66 @@ const api = axios.create({
   },
 });
 
+// Injeta o token de cliente (quando logado) nas requisições, para que
+// os pedidos criados sejam vinculados à conta do cliente.
+api.interceptors.request.use((config) => {
+  const customerToken = localStorage.getItem('customerToken');
+  if (customerToken) {
+    config.headers.Authorization = `Bearer ${customerToken}`;
+  }
+  return config;
+});
+
+// ============================================
+// AUTENTICAÇÃO DE CLIENTES
+// ============================================
+
+export const cadastrarCliente = async (dados) => {
+  const response = await api.post('/customer/register', dados);
+  return response.data;
+};
+
+export const loginCliente = async (email, password) => {
+  const response = await api.post('/customer/login', { email, password });
+  return response.data;
+};
+
+export const loginClienteGoogle = async (credential) => {
+  const response = await api.post('/customer/google', { credential });
+  return response.data;
+};
+
+export const getClienteAtual = async () => {
+  const response = await api.get('/customer/me');
+  return response.data;
+};
+
+export const esqueciSenhaCliente = async (email) => {
+  const response = await api.post('/customer/forgot-password', { email });
+  return response.data;
+};
+
+export const validarTokenResetCliente = async (token) => {
+  const response = await api.post('/customer/validate-reset-token', { token });
+  return response.data;
+};
+
+export const redefinirSenhaCliente = async (token, newPassword) => {
+  const response = await api.post('/customer/reset-password', { token, newPassword });
+  return response.data;
+};
+
+export const getPedidosCliente = async () => {
+  const response = await api.get('/customer/orders');
+  return response.data;
+};
+
+// Recupera os dados de um pedido pelo id (usado no retorno do Checkout Pro)
+export const getPedidoPorId = async (id) => {
+  const response = await api.get(`/pedido/${id}`);
+  return response.data;
+};
+
 // ============================================
 // CATEGORIAS
 // ============================================

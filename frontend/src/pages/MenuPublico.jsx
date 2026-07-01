@@ -1,13 +1,24 @@
 import { useState, useEffect, useRef } from 'react';
-import { FaShoppingCart, FaWhatsapp, FaSearch, FaTimes, FaPlus, FaMinus, FaStar, FaFire, FaTag, FaChevronDown, FaChevronUp, FaLightbulb, FaMoon, FaSun, FaCopy, FaCheck, FaQrcode } from 'react-icons/fa';
-import { getCardapioComponentes, criarPagamentoPix, consultarStatusPix, criarCheckoutPro, getSugestoes, getSettings } from '../services/api';
+import { FaShoppingCart, FaWhatsapp, FaSearch, FaTimes, FaPlus, FaMinus, FaStar, FaFire, FaTag, FaChevronDown, FaChevronUp, FaLightbulb, FaMoon, FaSun, FaCopy, FaCheck, FaQrcode, FaUserCircle, FaSignOutAlt } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { getCardapioComponentes, criarPagamentoPix, consultarStatusPix, criarCheckoutPro, getSugestoes, getSettings, getPedidoPorId } from '../services/api';
+import { useCustomerAuth } from '../contexts/CustomerAuthContext';
 import SugestoesMelhorias from '../SugestoesMelhoriasAPI';
 import '../App.css';
 
 function MenuPublico() {
+  const navigate = useNavigate();
+  const { customer, isAuthenticated, logout } = useCustomerAuth();
   const [cardapio, setCardapio] = useState([]);
   const [sugestoes, setSugestoes] = useState([]);
-  const [carrinho, setCarrinho] = useState([]);
+  const [carrinho, setCarrinho] = useState(() => {
+    try {
+      const salvo = localStorage.getItem('carrinho');
+      return salvo ? JSON.parse(salvo) : [];
+    } catch {
+      return [];
+    }
+  });
   const [busca, setBusca] = useState('');
   const [categoriaFiltro, setCategoriaFiltro] = useState('Todas');
   const [categoriaAtiva, setCategoriaAtiva] = useState('Todas');
@@ -58,6 +69,24 @@ function MenuPublico() {
   const toggleTheme = () => {
     setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
   };
+
+  // Mantém o carrinho salvo (para não perder itens ao ir/voltar do login)
+  useEffect(() => {
+    try {
+      localStorage.setItem('carrinho', JSON.stringify(carrinho));
+    } catch { /* noop */ }
+  }, [carrinho]);
+
+  // Preenche os dados do cliente com a conta logada
+  useEffect(() => {
+    if (customer) {
+      setCliente((prev) => ({
+        ...prev,
+        nome: prev.nome || [customer.firstName, customer.lastName].filter(Boolean).join(' ').trim(),
+        telefone: prev.telefone || customer.phone || ''
+      }));
+    }
+  }, [customer]);
 
   // Carregar cardápio e sugestões
   useEffect(() => {
@@ -222,11 +251,44 @@ function MenuPublico() {
     const pedidoId = params.get('pedido');
     if (!pagamento || !pedidoId) return;
 
-    setCheckoutData({ orderId: Number(pedidoId), preferenceId: null, publicKey: null, total: 0, itens: 0, cliente: '' });
-    setCheckoutStatus(pagamento === 'falha' ? 'rejected' : 'pending');
+    const orderId = Number(pedidoId);
 
     // Limpa os parâmetros da URL para evitar reprocessar ao recarregar
     window.history.replaceState({}, '', window.location.pathname);
+
+    // Estado inicial enquanto busca os dados reais do pedido no backend
+    setCheckoutData({ orderId, preferenceId: null, publicKey: null, total: 0, itens: 0, cliente: '' });
+    setCheckoutStatus(pagamento === 'falha' ? 'rejected' : 'pending');
+
+    // Recupera os dados do pedido (evita perder total/itens/cliente após o redirecionamento)
+    getPedidoPorId(orderId)
+      .then((pedido) => {
+        setCheckoutData((prev) => ({
+          ...(prev || {}),
+          orderId,
+          total: pedido.total ?? 0,
+          itens: Array.isArray(pedido.itens) ? pedido.itens.length : 0,
+          cliente: pedido.cliente?.nome || ''
+        }));
+
+        if (pedido.paid) {
+          // Pagamento já confirmado (cartão aprovado): conclui sem ficar carregando
+          setCheckoutStatus('paid');
+          setPedidoEnviado({
+            orderId,
+            total: pedido.total,
+            itens: Array.isArray(pedido.itens) ? pedido.itens.length : 0,
+            cliente: pedido.cliente?.nome || ''
+          });
+          setCarrinho([]);
+          if (pedido.whatsappLink) {
+            window.open(pedido.whatsappLink, '_blank');
+          }
+        } else if (['rejected', 'cancelled'].includes(pedido.paymentStatus)) {
+          setCheckoutStatus(pedido.paymentStatus);
+        }
+      })
+      .catch((e) => console.debug('Recuperar pedido:', e.message));
   }, []);
 
   // Scroll suave para categoria
@@ -406,13 +468,19 @@ function MenuPublico() {
 
   // Enviar pedido para WhatsApp
   const enviarPedido = () => {
-    if (!cliente.nome) {
-      alert('Por favor, informe seu nome!');
-      return;
-    }
-    
     if (carrinho.length === 0) {
       alert('Seu carrinho está vazio!');
+      return;
+    }
+
+    // Exige login para finalizar o pagamento
+    if (!isAuthenticated()) {
+      navigate('/entrar', { state: { from: '/menu' } });
+      return;
+    }
+
+    if (!cliente.nome) {
+      alert('Por favor, informe seu nome!');
       return;
     }
 
@@ -482,12 +550,19 @@ function MenuPublico() {
 
   // Inicia o pagamento via Checkout Pro (cartão, PIX, boleto na página do Mercado Pago)
   const pagarComCheckoutPro = () => {
-    if (!cliente.nome) {
-      alert('Por favor, informe seu nome!');
-      return;
-    }
     if (carrinho.length === 0) {
       alert('Seu carrinho está vazio!');
+      return;
+    }
+
+    // Exige login para finalizar o pagamento
+    if (!isAuthenticated()) {
+      navigate('/entrar', { state: { from: '/menu' } });
+      return;
+    }
+
+    if (!cliente.nome) {
+      alert('Por favor, informe seu nome!');
       return;
     }
 
@@ -661,6 +736,23 @@ function MenuPublico() {
             >
               {theme === 'light' ? <FaMoon /> : <FaSun />}
             </button>
+            {isAuthenticated() ? (
+              <button
+                className="theme-toggle-button"
+                onClick={() => { if (window.confirm('Deseja sair da sua conta?')) logout(); }}
+                title={`Sair (${customer?.firstName || 'conta'})`}
+              >
+                <FaSignOutAlt />
+              </button>
+            ) : (
+              <button
+                className="theme-toggle-button"
+                onClick={() => navigate('/entrar', { state: { from: '/menu' } })}
+                title="Entrar / Cadastrar"
+              >
+                <FaUserCircle />
+              </button>
+            )}
             <button 
               className="sugestoes-button"
               onClick={() => setPaginaAtual('sugestoes')}

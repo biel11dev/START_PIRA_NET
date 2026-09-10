@@ -988,7 +988,7 @@ function MenuPublico() {
                   </div>
 
                   <div className="customer-form">
-                    <h3>Seus Dados</h3>
+                    <h3>Dados do Pedido</h3>
                     <input
                       type="text"
                       placeholder="Nome *"

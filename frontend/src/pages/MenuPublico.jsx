@@ -6,6 +6,16 @@ import { useCustomerAuth } from '../contexts/CustomerAuthContext';
 import SugestoesMelhorias from '../SugestoesMelhoriasAPI';
 import '../App.css';
 
+// Remove o termo técnico de contabilidade interna "Porção XXg" do início dos
+// nomes de recheios/opções, pois não deve ser exibido aos clientes.
+// Ex.: "Porção 30g Calabresa" -> "Calabresa"; "Porção 15g Cheddar" -> "Cheddar".
+const RE_PORCAO = /^\s*por[cç][aã]o\s+\d+\s*g(?:['´]s)?\s*[-–—:]*\s*/i;
+const limparNomeRecheio = (nome) => {
+  const original = String(nome ?? '').trim();
+  const limpo = original.replace(RE_PORCAO, '').trim();
+  return limpo || original; // evita nome vazio em casos extremos
+};
+
 function MenuPublico() {
   const navigate = useNavigate();
   const { customer, isAuthenticated, logout } = useCustomerAuth();
@@ -405,7 +415,14 @@ function MenuPublico() {
     let extra = 0;
     (produto.composicoes || []).forEach(comp => {
       const sel = selecoes[comp.id] || [];
-      comp.opcoes.filter(o => sel.includes(o.id)).forEach(o => { extra += o.valorExtra || 0; });
+      const selecionadas = comp.opcoes.filter(o => sel.includes(o.id));
+      // Montagem: 1ªs porções grátis; cada adicional além disso soma o valor definido
+      if (comp.multiplo && (comp.valorAdicional || 0) > 0) {
+        const pagas = Math.max(0, selecionadas.length - (comp.porcoesGratis || 0));
+        extra += pagas * (comp.valorAdicional || 0);
+      } else {
+        selecionadas.forEach(o => { extra += o.valorExtra || 0; });
+      }
     });
     return extra;
   };
@@ -427,7 +444,7 @@ function MenuPublico() {
     comps.forEach(comp => {
       const sel = compSelections[comp.id] || [];
       const selecionadas = comp.opcoes.filter(o => sel.includes(o.id));
-      if (selecionadas.length > 0) labelParts.push(`${comp.nome}: ${selecionadas.map(o => o.nome).join(', ')}`);
+      if (selecionadas.length > 0) labelParts.push(`${comp.nome}: ${selecionadas.map(o => limparNomeRecheio(o.nome)).join(', ')}`);
     });
 
     const precoFinal = compModalProduct.price + calcularExtrasComposicao(compModalProduct, compSelections);
@@ -1251,8 +1268,9 @@ function MenuPublico() {
                         {comp.nome}
                         {comp.obrigatorio && <span className="composicao-obrigatorio"> *</span>}
                       </h3>
-                      {comp.multiplo && (
-                        <span className="composicao-limite">até {comp.maxOpcoes}</span>
+                      {comp.multiplo && ((comp.valorAdicional || 0) > 0
+                        ? <span className="composicao-limite">{(compSelections[comp.id] || []).length}/{comp.maxOpcoes} • {comp.porcoesGratis} grátis • +R$ {Number(comp.valorAdicional).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} cada</span>
+                        : <span className="composicao-limite">até {comp.maxOpcoes}</span>
                       )}
                     </div>
                     {comp.descricao && <p className="composicao-descricao">{comp.descricao}</p>}
@@ -1266,7 +1284,7 @@ function MenuPublico() {
                             className={`composicao-opcao ${ativa ? 'ativa' : ''}`}
                             onClick={() => toggleCompOpcao(comp.id, opcao.id, comp.multiplo, comp.maxOpcoes)}
                           >
-                            <span>{opcao.nome}</span>
+                            <span>{limparNomeRecheio(opcao.nome)}</span>
                             {opcao.valorExtra > 0 && (
                               <span className="composicao-extra">
                                 +R$ {opcao.valorExtra.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
